@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Report Generator</title>
+  </head>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
+    main {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      gap: 2em;
+      align-items: center;
+    }
+    main p {
+      margin: 0 auto;
+      width: 90%;
+    }
+    table {
+      font-family: arial, sans-serif;
+      border-collapse: collapse;
+      width: 97%;
+      margin: 0 auto;
+    }
+
+    td,
+    th {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 8px;
+    }
+    #toprow th {
+      background-color: #b8dcec;
+      border: 1px solid grey;
+    }
+
+    .positive-growth {
+      background-color: #c8d49c;
+      color: black;
+    }
+
+    .negative-growth {
+      background-color: #ffc494;
+      color: black;
+    }
+  </style>
+  <body>
+    <main>
+      <h1>the reports</h1>
+      <table id="report-table">
+        <tr id="toprow">
+          <th>Month</th>
+          <th>Target</th>
+          <th>FYno</th>
+          <th>Current Total (in MT)</th>
+          <th>Trucks</th>
+          <th>Trains</th>
+          <th>Ships</th>
+          <th>FyNO-1</th>
+          <th>Growth</th>
+          <th>Growth (Target)</th>
+        </tr>
+        <tr>
+            <td>April</td>
+            <td>5000</td>
+            <td>2022</td>
+            <td>5002</td>
+            <td>1500</td>
+            <td>1500</td>
+            <td>2002</td>
+            <td>4500</td>
+            <td id="growth-cell">+52%</td>
+            <td id="growth-cell">+23%</td>
+          </tr>
+          <tr>
+            <td>June</td>
+            <td>5000</td>
+            <td>2022</td>
+            <td>5002</td>
+            <td>1500</td>
+            <td>1500</td>
+            <td>2002</td>
+            <td>4500</td>
+            <td id="growth-cell">+52%</td>
+            <td id="growth-cell">+23%</td>
+          </tr>
+        {% for report in productions %} 
+        {% with total=sum %}
+        {% with tk_total=truck_sum %}
+        {% with tr_total=train_sum %}
+        {% with sp_total=ship_sum %}
+        <tr>
+          <td>{{report.Subs}}</td>
+          <td>{{report.target}}</td>
+          <td>{{report.fyno}}</td>
+          <td>{{ total }}</td>
+          <td>{{ tk_total }}</td>
+          <td>{{ tr_total }}</td>
+          <td>{{ sp_total }}</td>
+          <td>{{report.pastfyno}}</td>
+          <td id="growth-cell">{{report.growth}}</td>
+          <td id="growth-cell">0</td>
+        </tr>
+        {% endwith %} 
+        {% endwith %} 
+        {% endwith %} 
+        {% endwith %} 
+        {% endfor %}
+        <tr id="grandtotal-row">
+          <th>Grand</th>
+          <th>Total</th>
+          <th>0</th>
+          <th>0</th>
+          <th>0</th>
+          <th>0</th>
+          <th>0</th>
+          <th>0</th>
+          <th>0</th>
+          <th>0</th>
+        </tr>
+      </table>
+
+      <!-- <script>
+        document.addEventListener("DOMContentLoaded", function () {
+          var table = document.getElementById("report-table");
+          var grandtotalrow = document.getElementById("grandtotal-row");
+
+          var total_target = 0;
+          var total_fyno = 0;
+          var total_Achmt = 0;
+          var total_pastfyno = 0;
+          var total_growth = 0;
+
+          for (var i = 1; i < table.rows.length - 1; i++) {
+            var row = table.rows[i];
+            total_target += parseFloat(row.cells[2].textContent) || 0;
+            total_fyno += parseFloat(row.cells[3].textContent) || 0;
+            total_Achmt += parseFloat(row.cells[4].textContent) || 0;
+            total_pastfyno += parseFloat(row.cells[5].textContent) || 0;
+            total_growth += parseFloat(row.cells[6].textContent) || 0;
+
+            var growthCell = row.querySelector("#growth-cell");
+            var growthValue = parseFloat(growthCell.textContent);
+            if (growthValue > 0) {
+              growthCell.classList.add("positive-growth");
+            } else if (growthValue < 0) {
+              growthCell.classList.add("negative-growth");
+            }
+          }
+
+          grandtotalrow.cells[2].textContent = total_target.toFixed(2);
+          grandtotalrow.cells[3].textContent = total_fyno.toFixed(2);
+          grandtotalrow.cells[4].textContent = (
+            total_Achmt /
+            (table.rows.length - 2)
+          ).toFixed(2);
+          grandtotalrow.cells[5].textContent = total_pastfyno.toFixed(2);
+          grandtotalrow.cells[6].textContent = (
+            total_growth /
+            (table.rows.length - 2)
+          ).toFixed(2);
+        });
+      </script> -->
+    </main>
+  </body>
+</html>
