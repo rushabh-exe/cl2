@@ -1,0 +1,14 @@
+{% extends "adminpanel/dashboard.html" %}
+{% block content %}
+{% for journey in ShipJourney %}
+<div>
+    <h2>{{ journey.ship_no}}</h2>
+    <h2>{{ journey.coal_type }}</h2>
+    <h2>{{ journey.capacity }} MT</h2>
+    <h2>Journey Status: Not Completed</h2>
+    <a href="/tracker/trains/{{journey.id}}">Links</a>
+</div>
+<br>
+<hr>
+{% endfor %}
+{% endblock %}

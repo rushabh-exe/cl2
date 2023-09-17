@@ -1,0 +1,34 @@
+{% extends "adminpanel/dashboard.html" %}
+{% block content %}
+<div>
+    <h2>{{ ship.ship_no }}</h2>
+    <h2>{{ ship.buyer.name }}</h2>
+    <h2>Coal Type: {{ ship.coal_type }}</h2>
+    <h2>Capacity: {{ ship.capacity }} MT</h2>
+    <h2>Start Date: {{ ship.start_date }}</h2>
+    
+    <h2>Journey Checkpoints</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Location</th>
+                <th>Checkpoint Reached</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for checkpoint in checkpoints %}
+            <tr>
+                <td>{{ checkpoint.checkpoint.location }}</td>
+                <td>{% if checkpoint.checkpoint_reached %}Reached{% else %}Not Reached{% endif %}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+    {% if ship.complete %}
+    <h2>ship Status: Completed</h2>
+    {% else %}
+    <h2>ship Status: Not Completed</h2>
+    {% endif %}
+</div>
+{% endblock %}

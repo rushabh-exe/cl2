@@ -1,0 +1,34 @@
+{% extends "adminpanel/dashboard.html" %}
+{% block content %}
+<div>
+    <h2>{{ train.train_no }}</h2>
+    <h2>{{ train.buyer.name }}</h2>
+    <h2>Coal Type: {{ train.coal_type }}</h2>
+    <h2>Capacity: {{ train.capacity }} MT</h2>
+    <h2>Start Date: {{ train.start_date }}</h2>
+    
+    <h2>Journey Checkpoints</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Location</th>
+                <th>Checkpoint Reached</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for checkpoint in checkpoints %}
+            <tr>
+                <td>{{ checkpoint.checkpoint.location }}</td>
+                <td>{% if checkpoint.checkpoint_reached %}Reached{% else %}Not Reached{% endif %}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+    {% if train.complete %}
+    <h2>Train Status: Completed</h2>
+    {% else %}
+    <h2>Train Status: Not Completed</h2>
+    {% endif %}
+</div>
+{% endblock %}
