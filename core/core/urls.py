@@ -21,4 +21,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('tracker/',include('adminpanel.urls')),
     path('report/',include('reports.urls')),
+    path('rakes/',include('rakes.urls')),
 ]

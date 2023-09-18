@@ -143,4 +143,4 @@ class ShipJourneyCheckpoint(models.Model):
     checkpoint_reached = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"Journey: {self.journey.ship_no}, Checkpoint: {self.checkpoint.location.name}, Checkpoint Reached: {self.checkpoint_reached}"
+        return f"Journey: {self.journey.ship_no}, Checkpoint: {self.checkpoint.location}, Checkpoint Reached: {self.checkpoint_reached}"

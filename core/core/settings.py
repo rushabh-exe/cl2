@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'adminpanel.apps.AdminpanelConfig',
     'reports.apps.ReportsConfig',
+    'rakes.apps.RakesConfig',
 ]
 
 MIDDLEWARE = [

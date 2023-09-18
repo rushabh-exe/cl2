@@ -27,8 +27,8 @@ def trains(request):
 
 def inditrain(request, pk):
     train = get_object_or_404(TrainJourney, pk=pk)
-    checkpoints = TrainJourneyCheckpoint.objects.filter(journey=train)
-    context = {'train': train, 'checkpoints': checkpoints}
+    checkpoint= TrainJourneyCheckpoint.objects.filter(journey=train)
+    context = {'train': train, 'checkpoints': checkpoint}
     return render(request, 'adminpanel/inditrain.html', context)
 
 
@@ -38,6 +38,6 @@ def ships(request):
 
 def indiship(request, pk):
     ship = get_object_or_404(ShipJourney, pk=pk)
-    checkpoints = ShipJourneyCheckpoint.objects.filter(journey=ship)
-    context = {'ship': ship, 'checkpoints': checkpoints}
+    checkpointer = ShipJourneyCheckpoint.objects.filter(journey=ship)
+    context = {'ship': ship, 'checkpoints': checkpointer}
     return render(request, 'adminpanel/indiship.html', context)
