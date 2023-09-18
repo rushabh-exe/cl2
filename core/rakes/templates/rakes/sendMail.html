@@ -1,28 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Request for Railway Rakes</title>
+{% extends "adminpanel/dashboard.html" %}
+{% block content %}
+
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            padding: 20px;
-        }
+        
         .form-container {
             width: 800px;
             margin: 0 auto;
             border: 1px solid #ccc;
             padding: 20px;
             border-radius: 5px;
+            background-color: #fff;
+            margin-left: 420px;
+            margin-top: 40px;
         }
         label {
             display: block;
             margin-bottom: 10px;
         }
         input[type="number"] {
-            width: 100%;
+            width: 97%;
             padding: 10px;
             margin-bottom: 20px;
             border: 1px solid #ccc;
@@ -30,12 +26,13 @@
         }
         button {
             padding: 10px 20px;
-            background-color: #007bff;
+            background-color: #fc8d17;
             color: #fff;
             border: none;
             border-radius: 3px;
             cursor: pointer;
             margin-top: 10px;
+            margin-left: 650px;
         }
         #letterContent {
             border: 1px solid #ccc;
@@ -63,7 +60,7 @@
         <div id="letterContent">
             
         </div>
-        <button type="submit">Submit Request</button>
+        <button type="submit" class="sub-btn">Submit Request</button>
     </div>
 
     <script>
@@ -121,5 +118,6 @@
             );
         }
     </script>
-</body>
-</html>
+
+{% endblock %}
+

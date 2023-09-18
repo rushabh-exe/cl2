@@ -1,16 +1,80 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>Rakes</h1>
-    <h2>Total Production (Current) : {{ totalProduction }}</h2>
-    <h2>Train Delevery (Current) : {{ trainCount }}</h2>
-    <h2>Amt of Coal (Current for train) : {{ trainCoalCount }}</h2>
-    <h2>Number of Rakes Needed (Current - 1Rake = 1000MT) : {{ numberofRakes }}</h2>
-    <a href="/rakes/sendMail">Request for Rakes</a>
-</body>
-</html>
+{% extends "adminpanel/dashboard.html" %}
+{% block content %}
+
+<style>
+    .container-rakes{
+      margin-left: 250px;
+      margin-top: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+    }
+    .rakes-box {
+      width: calc(50% - 40px); 
+      padding: 20px;
+      margin: 20px;
+      background-color: #ffffff;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+      border-radius: 8px;
+      text-align: center;
+      height: 200px;
+      box-sizing: border-box;
+    }
+    .rakes-box p{
+      margin-top: 60px;
+    }
+    .h4{
+      margin-left: 275px;
+      margin-top: 20px;
+      font-size: small;
+    }
+    .rakes-btn{
+  display: flex;
+  justify-content: center;
+  align-items: end;
+  width: 30%;
+  margin-left: 400px;
+  margin-top: 12px;
+  padding: 8px 30px;
+  background-color: #fc8d17;
+  border-radius: 8px;
+}
+.rakes-btn:hover{
+  background-color: #ffbd39;
+  transition: 0.4s;
+}
+.rakes-btn a{
+  text-decoration: none;
+  color: aliceblue;
+  padding: 8px 100px;
+}
+  </style>
+  <h6 class="h4">Note : These information are based on Current Situations (i.e Realtime)</h6>
+  <div class="container-rakes">
+    
+    <div class="rakes-box">
+      <h1>{{ totalProduction }}</h1>
+      <p>Total Production</p>
+    </div>
+
+    <div class="rakes-box">
+      <h1>{{ trainCount }}</h1>
+      <p>Train Delivery</p>
+    </div>
+
+    <div class="rakes-box">
+      <h1>{{ trainCoalCount }}</h1>
+      <p>Amt of Coal (Current for train)</p>
+    </div>
+
+    <div class="rakes-box">
+      <h1>{{ numberofRakes }}</h1>
+      <p>Number of Rakes Needed
+      (1Rake = 1000MT)</p>
+    </div>
+
+    <div class="rakes-btn">
+      <a href="/rakes/sendMail">Request for Rakes</a>
+    </div>
+
+{% endblock %}

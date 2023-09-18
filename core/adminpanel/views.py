@@ -4,7 +4,7 @@ from django.http import HttpResponse
 from .models import TrainCheckpoint, TrainJourney, TrainJourneyCheckpoint, TruckJourney,Location,Buyers,TruckDriver,JourneyCheckpoint,Checkpoint,ShipJourney,ShipJourneyCheckpoint
 
 def restricted_view(request):
-    return render(request, 'adminpanel/dashboard.html')
+    return render(request, 'adminpanel/home.html')
 
 def trucks(request):
     return render(request,'adminpanel/trucks.html')
@@ -41,3 +41,9 @@ def indiship(request, pk):
     checkpointer = ShipJourneyCheckpoint.objects.filter(journey=ship)
     context = {'ship': ship, 'checkpoints': checkpointer}
     return render(request, 'adminpanel/indiship.html', context)
+
+
+def drivers(request):
+    drivers = TruckDriver.objects.all()
+    context = {'drivers':drivers}
+    return render(request, 'adminpanel/drivers.html',context)

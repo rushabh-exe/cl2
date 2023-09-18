@@ -3,14 +3,47 @@
 {% block title %}Trucks-Dashboard{% endblock %}
 
 {% block content %}
+<style>
+  .map-container{
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    width: 83%;
+    margin-left: 250px;
+    margin-top: 10px;
+  }
+  .list-btn{
+    display: flex;
+    justify-content: center;
+    align-items: end;
+    width: 10%;
+    margin-left: 750px;
+    margin-top: 12px;
+    padding: 8px 30px;
+    background-color: #fc8d17;
+    border-radius: 8px;
+  }
+  .list-btn:hover{
+    background-color: #ffbd39;
+    transition: 0.4s;
+  }
+  .list-btn a{
+    text-decoration: none;
+    color: aliceblue;
+    padding: 8px 100px;
+  }
+</style>
 <link
       rel="stylesheet"
       href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
     />
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-  
-    <div id="map" style="height: 650px; width: 100%"></div>
-
+  <div class="map-container">
+    <div id="map" style="height: 600px; width: 100%; "></div>
+  </div>
+  <div class="list-btn">
+  <a href="/tracker/trucks/list">List</a>
+</div>
     <script>
       var map = L.map("map").setView([22.5, 78.5], 5);
 
@@ -45,6 +78,6 @@
 
     </script>
 
-<a href="/tracker/trucks/list">List</a>
+
 
 {% endblock %}

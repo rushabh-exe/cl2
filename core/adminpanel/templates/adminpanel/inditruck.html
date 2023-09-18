@@ -1,38 +1,76 @@
 {% extends "adminpanel/dashboard.html" %}
 {% block content %}
-<div>
-    <h2>{{ truck.driver.name }}</h2>
-    <h2>{{ truck.buyer.name }}</h2>
-    <h2>Coal Type: {{ truck.coal_type }}</h2>
-    <h2>Capacity: {{ truck.capacity }} MT</h2>
-    <h2>Start Date: {{ truck.start_date }}</h2>
-    
-    <h2>Journey Checkpoints</h2>
-    <table>
+<style>
+    .container-indi {
+      margin-left: 275px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .indi-first {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .journey-checkpoints {
+      width: 50%; /* Adjust the width as needed */
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    th,
+    td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+  </style>
+
+<div class="container-indi">
+    <div class="indi-first">
+      <div>
+        <h2>{{ truck.driver.name }}</h2>
+        <h2>{{ truck.buyer.name }}</h2>
+        <h2>Coal Type: {{ truck.coal_type }}</h2>
+        <h2>Capacity: {{ truck.capacity }} MT</h2>
+        <h2>Start Date: {{ truck.start_date }}</h2>
+        {% if truck.complete %}
+        <h2>Truck Status: Completed</h2>
+        {% else %}
+        <h2>Truck Status: Not Completed</h2>
+        {% endif %}
+      </div>
+    </div>
+    <div class="journey-checkpoints">
+      <h2>Journey Checkpoints</h2>
+      <table>
         <thead>
-            <tr>
-                <th>Location</th>
-                <th>Checkpoint Reached</th>
-            </tr>
+          <tr>
+            <th>Location</th>
+            <th>Checkpoint Reached</th>
+          </tr>
         </thead>
         <tbody>
-            {% for checkpoint in checkpoints %}
-            <tr>
-                <td>{{ checkpoint.checkpoint.location }}</td>
-                <td>{% if checkpoint.checkpoint_reached %}Reached{% else %}Not Reached{% endif %}</td>
-            </tr>
-            {% endfor %}
+          {% for checkpoint in checkpoints %}
+          <tr>
+            <td>{{ checkpoint.checkpoint.location }}</td>
+            <!-- Use conditional classes based on status -->
+            <td class="{% if checkpoint.checkpoint_reached %}status-true{% else %}status-false{% endif %}">
+              {% if checkpoint.checkpoint_reached %}Reached{% else %}Not Reached{% endif %}
+            </td>
+          </tr>
+          {% endfor %}
         </tbody>
-    </table>
-    
-    {% if truck.complete %}
-    <h2>Truck Status: Completed</h2>
-    {% else %}
-    <h2>Truck Status: Not Completed</h2>
-    {% endif %}
-</div>
-<br>
-<hr>
+      </table>
+    </div>
+  </div>
 
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css">
 <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
