@@ -102,5 +102,60 @@
     </div>
   </div>
 
+  
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css">
+<style>
+  .map {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+    margin-left: 250px;
+    margin-top: 100px;
+    margin-bottom: 20px;
+    height: 400px;
+  }
+</style>
+
+<div class="map-container">
+    <div id="map" style="height: 600px; width: 100%; "></div>
+  </div>
+
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+<script>
+  var map = L.map('map').setView([0, 0], 13);
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+  }).addTo(map);
+
+  var marker = L.marker([0, 0]).addTo(map);
+
+  function updateLocation(position) {
+    var lat = position.coords.latitude;
+    var lon = position.coords.longitude;
+
+    marker.setLatLng([lat, lon]);
+
+    map.setView([lat, lon]);
+  }
+
+  function locationError(err) {
+    console.warn(`ERROR(${err.code}): ${err.message}`);
+  }
+
+  if ('geolocation' in navigator) {
+    navigator.geolocation.watchPosition(updateLocation, locationError, { enableHighAccuracy: true });
+  } else {
+    console.log('Geolocation is not available in this browser.');
+  }
+
+  // Update location every 5 seconds
+  setInterval(function () {
+    if ('geolocation' in navigator) {
+      navigator.geolocation.getCurrentPosition(updateLocation, locationError, { enableHighAccuracy: true });
+    }
+  }, 5000);
+</script>
 
 {% endblock %}
