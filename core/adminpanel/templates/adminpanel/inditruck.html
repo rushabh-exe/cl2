@@ -2,9 +2,13 @@
 {% block content %}
 <style>
     .container-indi {
-      margin-left: 275px;
+      margin-left: 262px;
       display: flex;
       justify-content: space-between;
+      background-color: #ffff;
+      padding: 10px;
+      margin-top: 10px;
+    margin-right: 10px;
     }
 
     .indi-first {
@@ -31,13 +35,35 @@
     th {
       background-color: #f2f2f2;
     }
+
+    .status-true {
+    color: #28a745;
+    font-size: 24px;
+    font-weight: bold;
+  }
+
+  .status-false {
+    color: #dc3545;
+    font-size: 24px;
+    font-weight: bold;
+  }
+
+  .map-container{
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    width: 83%;
+    margin-left: 250px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
   </style>
 
 <div class="container-indi">
     <div class="indi-first">
       <div>
-        <h2>{{ truck.driver.name }}</h2>
-        <h2>{{ truck.buyer.name }}</h2>
+        <h2>Driver : {{ truck.driver.name }}</h2>
+        <h2>Buyer : {{ truck.buyer.name }}</h2>
         <h2>Coal Type: {{ truck.coal_type }}</h2>
         <h2>Capacity: {{ truck.capacity }} MT</h2>
         <h2>Start Date: {{ truck.start_date }}</h2>
@@ -49,26 +75,34 @@
       </div>
     </div>
     <div class="journey-checkpoints">
-      <h2>Journey Checkpoints</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Location</th>
-            <th>Checkpoint Reached</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for checkpoint in checkpoints %}
-          <tr>
-            <td>{{ checkpoint.checkpoint.location }}</td>
-            <!-- Use conditional classes based on status -->
-            <td class="{% if checkpoint.checkpoint_reached %}status-true{% else %}status-false{% endif %}">
-              {% if checkpoint.checkpoint_reached %}Reached{% else %}Not Reached{% endif %}
-            </td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+        <h2>Journey Checkpoints</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Location</th>
+              <th>Checkpoint Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for checkpoint in checkpoints %}
+            <tr>
+              <td>{{ checkpoint.checkpoint.location }}</td>
+              <td>
+                {% if checkpoint.checkpoint_reached %}
+                  <span class="status-true">✓</span> 
+                {% else %}
+                  <span class="status-false">✗</span>
+                {% endif %}
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        <br>
+        <h5><div id="distance">Distance: ~ Calculating...</div></h5>
+        <h5><div id="time">Time: Calculating...</div></h5>
+        <h5><div id="fuelPrice">Fuel Price: ~ Calculating...</div></h5>
+      </div>
     </div>
   </div>
 
@@ -84,10 +118,10 @@
 </head>
 <body>
 
-<div id="distance">Distance: ~ Calculating...</div>
-<div id="time">Time: Calculating...</div>
-<div id="fuelPrice">Fuel Price: ~ Calculating...</div>
-<div id="map"></div>
+
+<div class="map-container">
+    <div id="map" style="height: 600px; width: 100%; "></div>
+  </div>
 
 <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script> 

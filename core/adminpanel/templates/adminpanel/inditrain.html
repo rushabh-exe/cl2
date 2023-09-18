@@ -1,34 +1,106 @@
 {% extends "adminpanel/dashboard.html" %}
 {% block content %}
-<div>
-    <h2>{{ train.train_no }}</h2>
-    <h2>{{ train.buyer.name }}</h2>
-    <h2>Coal Type: {{ train.coal_type }}</h2>
-    <h2>Capacity: {{ train.capacity }} MT</h2>
-    <h2>Start Date: {{ train.start_date }}</h2>
-    
-    <h2>Journey Checkpoints</h2>
-    <table>
-        <thead>
+<style>
+    .container-indi {
+      margin-left: 262px;
+      display: flex;
+      justify-content: space-between;
+      background-color: #ffff;
+      padding: 10px;
+      margin-top: 10px;
+    margin-right: 10px;
+    }
+
+    .indi-first {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .journey-checkpoints {
+      width: 50%; /* Adjust the width as needed */
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    th,
+    td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    .status-true {
+    color: #28a745;
+    font-size: 24px;
+    font-weight: bold;
+  }
+
+  .status-false {
+    color: #dc3545;
+    font-size: 24px;
+    font-weight: bold;
+  }
+
+  .map-container{
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    width: 83%;
+    margin-left: 250px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  </style>
+
+<div class="container-indi">
+    <div class="indi-first">
+      <div>
+        <h2>Train No : {{ train.train_no }}</h2>
+        <h2>Buyer : {{ train.buyer.name }}</h2>
+        <h2>Coal Type: {{ train.coal_type }}</h2>
+        <h2>Capacity: {{ train.capacity }} MT</h2>
+        <h2>Start Date: {{ train.start_date }}</h2>
+        {% if train.complete %}
+        <h2>Train Status: Completed</h2>
+        {% else %}
+        <h2>Train Status: Not Completed</h2>
+        {% endif %}
+      </div>
+    </div>
+    <div class="journey-checkpoints">
+        <h2>Journey Checkpoints</h2>
+        <table>
+          <thead>
             <tr>
-                <th>Location</th>
-                <th>Checkpoint Reached</th>
+              <th>Location</th>
+              <th>Checkpoint Status</th>
             </tr>
-        </thead>
-        <tbody>
+          </thead>
+          <tbody>
             {% for checkpoint in checkpoints %}
             <tr>
-                <td>{{ checkpoint.checkpoint.location }}</td>
-                <td>{% if checkpoint.checkpoint_reached %}Reached{% else %}Not Reached{% endif %}</td>
+              <td>{{ checkpoint.checkpoint.location }}</td>
+              <td>
+                {% if checkpoint.checkpoint_reached %}
+                  <span class="status-true">✓</span> 
+                {% else %}
+                  <span class="status-false">✗</span>
+                {% endif %}
+              </td>
             </tr>
             {% endfor %}
-        </tbody>
-    </table>
-    
-    {% if train.complete %}
-    <h2>Train Status: Completed</h2>
-    {% else %}
-    <h2>Train Status: Not Completed</h2>
-    {% endif %}
-</div>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+
 {% endblock %}
