@@ -45,71 +45,91 @@
     </style>
 </head>
 <body>
-    <div id="map"></div>
 
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<div id="distance">Distance: ~ Calculating...</div>
+<div id="time">Time: Calculating...</div>
+<div id="fuelPrice">Fuel Price: ~ Calculating...</div>
+<div id="map"></div>
 
-    <script>
-        var curr_lat = 23.4003;
-        var curr_long = 85.3218;
-        var startPoint = L.latLng(curr_lat,curr_long);
-        var dest_lat = `{{ truck.buyer.latitude }}`;
-        var dest_long = `{{ truck.buyer.longitude }}`;
-        console.log(dest_lat);
-        console.log(dest_long);
-        var endPoint = L.latLng(dest_lat,dest_long);
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script> 
 
-        var map = L.map('map').setView([20.5937, 78.9629],6);
 
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(map);
+<script>
+    var curr_lat = 23.4003;
+    var curr_long = 85.3218;
+    var startPoint = L.latLng(curr_lat, curr_long);
+    var dest_lat = `{{ truck.buyer.latitude }}`;
+    var dest_long = `{{ truck.buyer.longitude }}`;
+    var endPoint = L.latLng(dest_lat, dest_long);
 
-         
+    var map = L.map('map').setView([20.5937, 78.9629], 6);
 
-        // Create markers for start and end points with custom icons
-        var startIcon = L.divIcon({ className: 'start-icon', iconSize: [20, 20], html: '🟢' }); // Green icon
-        var endIcon = L.divIcon({ className: 'end-icon', iconSize: [20, 20], html: '🔴' }); // Red icon
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
 
-        L.marker(startPoint, { icon: startIcon }).addTo(map);
-        L.marker(endPoint, { icon: endIcon }).addTo(map);
+    var startIcon = L.divIcon({ className: 'start-icon', iconSize: [20, 20], html: '🟢' });
+    var endIcon = L.divIcon({ className: 'end-icon', iconSize: [20, 20], html: '🔴' }); 
 
-        // Make a request to OpenRouteService API to get directions
-        var apiKey = '5b3ce3597851110001cf6248b5ef2d6d9fd845829710f7d27e8c93b7';
-        var url = `https://api.openrouteservice.org/v2/directions/driving-car?api_key=${apiKey}&start=${startPoint.lng},${startPoint.lat}&end=${endPoint.lng},${endPoint.lat}`;
+    L.marker(startPoint, { icon: startIcon }).addTo(map);
+    L.marker(endPoint, { icon: endIcon }).addTo(map);
 
-        axios.get(url)
-            .then(function(response) {
-                var routeCoordinates = response.data.features[0].geometry.coordinates;
-                
-                var routeGeoJSON = {
-                    type: 'Feature',
-                    properties: {},
-                    geometry: {
-                        type: 'LineString',
-                        coordinates: routeCoordinates
-                    }
-                };
+    var apiKey = '5b3ce3597851110001cf6248b5ef2d6d9fd845829710f7d27e8c93b7';
+    var url = `https://api.openrouteservice.org/v2/directions/driving-car?api_key=${apiKey}&start=${startPoint.lng},${startPoint.lat}&end=${endPoint.lng},${endPoint.lat}`;
 
-                L.geoJSON(routeGeoJSON).addTo(map);
-            })
-            .catch(function(error) {
-                console.error('Error:', error);
+    axios.get(url)
+        .then(function (response) {
+            var routeCoordinates = response.data.features[0].geometry.coordinates;
+            var routeDistance = 0;
+            var routeDuration = 0;
+
+            response.data.features[0].properties.segments.forEach(function (segment) {
+                routeDistance += segment.distance;
+                routeDuration += segment.duration;
             });
-    </script>
 
-    <style>
-        .start-icon {
-            color: green;
-            text-align: center;
-            font-size: 20px;
-        }
+            var distanceInKilometers = routeDistance / 1000;
+            var speedMetersPerSecond = routeDistance / routeDuration;
+            var timeinHours = routeDuration / 3600;
 
-        .end-icon {
-            color: red;
-            text-align: center;
-            font-size: 20px;
-        }
-    </style>
+            var fuelCostPerLiter = 100;
+            var mileage = 30;
+            var totalFuelPrice = (distanceInKilometers / mileage) * fuelCostPerLiter;
+
+            document.getElementById('distance').textContent = `Distance: ~ ${distanceInKilometers.toFixed(2)} kilometers (Estimated)`;
+            document.getElementById('time').textContent = `Time: ${timeinHours.toFixed(2)} Hrs (Estimated without breaks/haults)`;
+            document.getElementById('fuelPrice').textContent = `Fuel Price: ~ ₹${totalFuelPrice.toFixed(2)} (Estimated)`;
+
+            var routeGeoJSON = {
+                type: 'Feature',
+                properties: {},
+                geometry: {
+                    type: 'LineString',
+                    coordinates: routeCoordinates
+                }
+            };
+
+            L.geoJSON(routeGeoJSON).addTo(map);
+        })
+        .catch(function (error) {
+            console.error('Error:', error);
+        });
+</script>
+
+
+<style>
+    .start-icon {
+        color: green;
+        text-align: center;
+        font-size: 20px;
+    }
+
+    .end-icon {
+        color: red;
+        text-align: center;
+        font-size: 20px;
+    }
+</style>
+
 {% endblock %}
