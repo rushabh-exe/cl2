@@ -16,6 +16,30 @@ def truck_list(request):
 from django.shortcuts import render, get_object_or_404, redirect
 
 def inditruck(request, pk):
+    recognized_plate = "MH20EJ036"
+    recognized_location = "Mumbai"
+
+    # Assuming mlmodel returns a recognized license plate as recognized_plate
+
+    drivers = TruckDriver.objects.all()
+    matching_driver = None
+
+    for driver in drivers:
+        if driver.truck_no == recognized_plate:
+            matching_driver = driver
+            break
+
+    if matching_driver:
+        # Update the truck journey record, considering location matching
+        truck_journey = TruckJourney.objects.get(driver=matching_driver)
+        
+        # Iterate through checkpoints of the journey
+        for journey_checkpoint in JourneyCheckpoint.objects.filter(journey=truck_journey):
+            if journey_checkpoint.checkpoint.location.name == recognized_location:
+                journey_checkpoint.checkpoint_reached = True
+                journey_checkpoint.save()
+                print("Found Truck")
+
     truck = get_object_or_404(TruckJourney, pk=pk)
     checkpoints = JourneyCheckpoint.objects.filter(journey=truck)
     context = {'truck': truck, 'checkpoints': checkpoints}
