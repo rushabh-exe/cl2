@@ -1,0 +1,36 @@
+    .container-box {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 170px;
+            margin-left: 220px;
+        }
+
+        .box {
+            width: 150px;
+            height: 150px;
+            background-color: #fff;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            padding: 80px;
+            margin: 10px;
+            
+        }
+
+        .box:hover{
+          color: #ffffff;
+          background-color: #fc8d17;
+          transition: 0.4s;
+        }
+        .box a:hover{
+          color: #ffffff;
+        }
+        .box a{
+            margin: 0;
+            color: #333;
+            padding: 80px;
+            display: flex-start;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+        }

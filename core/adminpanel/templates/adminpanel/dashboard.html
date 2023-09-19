@@ -1,113 +1,11 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>CL2-Dashboard</title>
-    <style>
-      body,
-      ul {
-        margin: 0;
-        padding: 0;
-      }
-
-      body {
-        font-family: Arial, sans-serif;
-        background-color: #f0f0f0;
-        overflow-x: hidden;
-      }
-
-      .navbar {
-        width: 100%;
-        background-color: #ff8400;
-        color: #fff;
-        padding: 15px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-
-      .navbar a {
-        color: #fff;
-        text-decoration: none;
-        margin: 0 10px;
-        padding: 10px 40px;
-        border-radius: 8px;
-      }
-      .navbar a:hover {
-        background-color: #ffffff;
-        color: #ff8400;
-        transition: 0.4s;
-        border-radius: 8px;
-      }
-
-      .sidebar {
-        width: 250px;
-        height: 100%;
-        background-color: #fff;
-        box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-        position: fixed;
-        top: 0;
-        left: 0;
-        overflow-y: auto;
-        z-index: 1;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: flex-start;
-      }
-
-      .sidebar h2 {
-        margin: 40px 0;
-        color: #333;
-      }
-
-      .sidebar ul {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-        margin-top: 50px;
-      }
-
-      .sidebar ul li {
-        padding: 10px 20px;
-        margin-bottom: 50px;
-      }
-
-      .sidebar ul li a {
-        color: #000000;
-        text-decoration: none;
-        padding: 15px 50px;
-        border-radius: 8px;
-      }
-      .sidebar ul li a:hover {
-        background-color: #ff8400;
-        transition: 0.4s;
-        color: #ffffff;
-        border-radius: 8px;
-      }
-
-      .h2 {
-        position: relative;
-        cursor: pointer;
-      }
-
-      .h2::before {
-        content: "";
-        position: absolute;
-        left: 0;
-        bottom: 0;
-        width: 0;
-        height: 4px;
-        background-color: orange;
-        transition: width 0.3s;
-        z-index: -1;
-      }
-
-      .h2:hover::before {
-        width: 100%;
-      }
-    </style>
+    <link rel="stylesheet" href="{% static 'dashboard.css' %}">
   </head>
   <body>
     <div class="navbar">
@@ -130,4 +28,5 @@
   </body>
 </html>
 
-{% block content %} {% endblock %}
+{% block content %}
+{% endblock %}
