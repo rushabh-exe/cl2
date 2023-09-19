@@ -3,18 +3,16 @@
 {% for journey in TrainJourney %}
 {% load static %}
 <link rel="stylesheet" href="{% static 'trains.css' %}">
-
-  
-  <div class="container-list">
-    <div class="card-list">
-      <div>
-        <h2>{{ journey.train_no}}</h2>
-        <h2>{{ journey.coal_type }}</h2>
-        <h2>{{ journey.capacity }} MT</h2>
-        <h2>Journey Status: Not Completed</h2>
-        <a href="/tracker/trains/{{journey.id}}">Links</a>
-    </div>
+<div class="container-list">
+  <div class="card-list">
+    <div>
+      <h2>{{ journey.train_no}}</h2>
+      <h2>{{ journey.coal_type }}</h2>
+      <h2>{{ journey.capacity }} MT</h2>
+      <h2>Journey Status: Not Completed</h2>
+      <a href="/tracker/trains/{{journey.id}}">Links</a>
     </div>
   </div>
+</div>
 {% endfor %}
 {% endblock %}

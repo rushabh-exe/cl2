@@ -1,22 +1,17 @@
-{% extends "adminpanel/dashboard.html" %}
-{% block content %}
-{% load static %}
-<link rel="stylesheet" href="{% static 'drivers.css' %}">
+{% extends "adminpanel/dashboard.html" %} {% block content %} {% load static %}
+<link rel="stylesheet" href="{% static 'drivers.css' %}"/>
 <div class="card-container">
-{% for driver in drivers %}
-    <div class="card">
-      <img
-        src="https://www.w3schools.com/howto/img_avatar.png"
-        alt="Avatar"
-      />
-      <div class="container">
-        <h4><b>Name : {{driver.name}}</b></h4>
-        <p>Truck : {{driver.truck_no}}</p>
-        <p>Joined : {{driver.joined_date}}</p>
-        <p>Aadhar No : {{driver.aadhar_no}}</p>
-        <p>License No : {{driver.license_no}}</p>
-      </div>
+  {% for driver in drivers %}
+  <div class="card">
+    <img src="https://www.w3schools.com/howto/img_avatar.png" alt="Avatar" />
+    <div class="container">
+      <h4><b>Name : {{driver.name}}</b></h4>
+      <p>Truck : {{driver.truck_no}}</p>
+      <p>Joined : {{driver.joined_date}}</p>
+      <p>Aadhar No : {{driver.aadhar_no}}</p>
+      <p>License No : {{driver.license_no}}</p>
     </div>
-{% endfor %}
+  </div>
+  {% endfor %}
 </div>
 {% endblock %}

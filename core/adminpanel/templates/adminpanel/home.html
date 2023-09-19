@@ -1,10 +1,14 @@
-{% extends "adminpanel/dashboard.html" %}
-{% block content %}
-{% load static %}
-<link rel="stylesheet" href="{% static 'home.css' %}">
-<div class="container-box">
+{% extends "adminpanel/dashboard.html" %} {% block content %} {% load static %}
+<link rel="stylesheet" href="{% static 'home.css' %}" />
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+/>
+
+<div>
+  <div class="container-box">
     <div class="box">
-        <a href="/tracker/trucks"><h2>Trucks</h2></a>
+      <a href="/tracker/trucks"><h2>Trucks</h2></a>
     </div>
     <div class="box">
       <a href="/tracker/trains"><h2>Trains</h2></a>
@@ -12,57 +16,45 @@
     <div class="box">
       <a href="/tracker/ships"><h2>Ships</h2></a>
     </div>
-</div>
-<style>
-  .map-container{
-    display: flex;
-    justify-content: end;
-    align-items: center;
-    width: 83%;
-    margin-left: 250px;
-    margin-top: 100px;
-    margin-bottom: 20px;
-  }
-</style>
-<link
-      rel="stylesheet"
-      href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
-    />
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-  <div class="map-container">
-    <div id="map" style="height: 600px; width: 100%; "></div>
   </div>
-    <script>
-      var map = L.map("map").setView([22.5, 78.5], 5);
+  <div class="map-container">
+    <div id="map" style="height: 600px; width: 100%"></div>
+  </div>
+</div>
 
-      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-        attribution:
-          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-      }).addTo(map);
-      
-      var markers = [];
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+<script>
+  var map = L.map("map").setView([22.5, 78.5], 5);
 
-      for (var i = 0; i < 5; i++) {
-        var marker = L.marker([getRandomLat(), getRandomLng()]).addTo(map).bindPopup('Rushabh Mevada : MH01351');
-        markers.push(marker);
-      }
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    attribution:
+      '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+  }).addTo(map);
 
-      function getRandomLat() {
-        return (Math.random() * (37.6 - 8.4) + 8.4).toFixed(6);
-      }
+  var markers = [];
 
-      function getRandomLng() {
-        return (Math.random() * (97.4 - 68.7) + 68.7).toFixed(6);
-      }
+  for (var i = 0; i < 5; i++) {
+    var marker = L.marker([getRandomLat(), getRandomLng()])
+      .addTo(map)
+      .bindPopup("Rushabh Mevada : MH01351");
+    markers.push(marker);
+  }
 
-      setInterval(function () {
-        markers.forEach(function (marker) {
-          var latlng = marker.getLatLng();
-          var newLat = latlng.lat + (Math.random() - 0.5) * 0.1;
-          var newLng = latlng.lng + (Math.random() - 0.5) * 0.1;
-          marker.setLatLng([newLat, newLng]);
-        });
-      }, 2000);
+  function getRandomLat() {
+    return (Math.random() * (37.6 - 8.4) + 8.4).toFixed(6);
+  }
 
-    </script>
+  function getRandomLng() {
+    return (Math.random() * (97.4 - 68.7) + 68.7).toFixed(6);
+  }
+
+  setInterval(function () {
+    markers.forEach(function (marker) {
+      var latlng = marker.getLatLng();
+      var newLat = latlng.lat + (Math.random() - 0.5) * 0.1;
+      var newLng = latlng.lng + (Math.random() - 0.5) * 0.1;
+      marker.setLatLng([newLat, newLng]);
+    });
+  }, 2000);
+</script>
 {% endblock %}

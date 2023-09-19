@@ -5,13 +5,13 @@
 <link rel="stylesheet" href="{% static 'ships.css' %}">
 <div class="container-list">
     <div class="card-list">
-      <div>
+      <div class="card-list-in">
         <h2>{{ journey.ship_no}}</h2>
         <h2>{{ journey.coal_type }}</h2>
         <h2>{{ journey.capacity }} MT</h2>
         <h2>Journey Status: Not Completed</h2>
         <a href="/tracker/ships/{{journey.id}}">Links</a>
-    </div>
+      </div>
     </div>
   </div>
 {% endfor %}

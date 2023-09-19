@@ -1,46 +1,36 @@
-    .container-rakes{
-      margin-left: 250px;
-      margin-top: 20px;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: flex-start;
-    }
-    .rakes-box {
-      width: calc(50% - 40px); 
-      padding: 20px;
-      margin: 20px;
-      background-color: #ffffff;
-      box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-      border-radius: 8px;
-      text-align: center;
-      height: 200px;
-      box-sizing: border-box;
-    }
-    .rakes-box p{
-      margin-top: 45px;
-    }
-    .h4{
-      margin-left: 275px;
-      margin-top: 20px;
-      font-size: small;
-    }
-    .rakes-btn{
+.container-rakes {
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+}
+h6{
+  margin-top: 1em;
+}
+.rakes-box {
+  padding: 3em;
+  margin: 2em;
+  background-color: #ffffff;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  text-align: center;
+  box-sizing: border-box;
+}
+.rakes-box p {
+  margin-top: 2em;
+}
+.rakes-btn {
   display: flex;
   justify-content: center;
+  align-items: center;
   align-items: end;
-  width: 30%;
-  margin-left: 400px;
-  margin-top: 12px;
-  padding: 8px 30px;
   background-color: #fc8d17;
   border-radius: 8px;
 }
-.rakes-btn:hover{
+.rakes-btn:hover {
   background-color: #ffbd39;
   transition: 0.4s;
 }
-.rakes-btn a{
+.rakes-btn a {
   text-decoration: none;
   color: aliceblue;
-  padding: 8px 100px;
+  padding: 1em 4em;
 }

@@ -1,34 +1,31 @@
-{% extends "adminpanel/dashboard.html" %}
-{% block content %}
-{% load static %}
-<link rel="stylesheet" href="{% static 'page.css' %}">
+{% extends "adminpanel/dashboard.html" %} {% block content %} {% load static %}
+<link rel="stylesheet" href="{% static 'page.css' %}" />
 
-  <h6 class="h4">Note : These information are based on Current Situations (i.e Realtime)</h6>
-  <div class="container-rakes">
-    
-    <div class="rakes-box">
-      <h1>{{ totalProduction }}</h1>
-      <p>Total Production</p>
-    </div>
+<h6>
+  Note : These information are based on Current Situations (i.e Realtime)
+</h6>
+<div class="container-rakes">
+  <div class="rakes-box">
+    <h1>{{ totalProduction }}</h1>
+    <p>Total Production</p>
+  </div>
 
-    <div class="rakes-box">
-      <h1>{{ trainCount }}</h1>
-      <p>Train Delivery</p>
-    </div>
+  <div class="rakes-box">
+    <h1>{{ trainCount }}</h1>
+    <p>Train Delivery</p>
+  </div>
 
-    <div class="rakes-box">
-      <h1>{{ trainCoalCount }}</h1>
-      <p>Amt of Coal (Current for train)</p>
-    </div>
+  <div class="rakes-box">
+    <h1>{{ trainCoalCount }}</h1>
+    <p>Amt of Coal (Current for train)</p>
+  </div>
 
-    <div class="rakes-box">
-      <h1>{{ numberofRakes }}</h1>
-      <p>Number of Rakes Needed
-      (1Rake = 1000MT)</p>
-    </div>
-
-    <div class="rakes-btn">
-      <a href="/rakes/sendMail">Request for Rakes</a>
-    </div>
-
+  <div class="rakes-box">
+    <h1>{{ numberofRakes }}</h1>
+    <p>Number of Rakes Needed (1Rake = 1000MT)</p>
+  </div>
+</div>
+<div class="rakes-btn">
+  <a href="/rakes/sendMail">Request for Rakes</a>
+</div>
 {% endblock %}

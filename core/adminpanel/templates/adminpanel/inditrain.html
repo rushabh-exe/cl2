@@ -1,74 +1,65 @@
-{% extends "adminpanel/dashboard.html" %}
-{% block content %}
-{% load static %}
-<link rel="stylesheet" href="{% static 'inditrain.css' %}">
+{% extends "adminpanel/dashboard.html" %} {% block content %} {% load static %}
+<link rel="stylesheet" href="{% static 'inditrain.css' %}" />
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+/>
 
 <div class="container-indi">
-  <div class="indi-first">
-    <div>
-      <h2>Train No : {{ train.train_no }}</h2>
-      <h2>Buyer : {{ train.buyer.name }}</h2>
-      <h2>Coal Type: {{ train.coal_type }}</h2>
-      <h2>Capacity: {{ train.capacity }} MT</h2>
-      <h2>Start Date: {{ train.start_date }}</h2>
-      {% if train.complete %}
-      <h2>Train Status: Completed</h2>
-      {% else %}
-      <h2>Train Status: Not Completed</h2>
-      {% endif %}
+  <div class="info-table">
+    <div class="indi-first">
+      <div>
+        <h2>Train No : {{ train.train_no }}</h2>
+        <h2>Buyer : {{ train.buyer.name }}</h2>
+        <h2>Coal Type: {{ train.coal_type }}</h2>
+        <h2>Capacity: {{ train.capacity }} MT</h2>
+        <h2>Start Date: {{ train.start_date }}</h2>
+        {% if train.complete %}
+        <h2>Train Status: Completed</h2>
+        {% else %}
+        <h2>Train Status: Not Completed</h2>
+        {% endif %}
+      </div>
+    </div>
+    <div class="journey-checkpoints">
+      <h2>Journey Checkpoints</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Location</th>
+            <th>Checkpoint Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for checkpoint in checkpoints %}
+          <tr>
+            <td>{{ checkpoint.checkpoint.location }}</td>
+            <td>
+              {% if checkpoint.checkpoint_reached %}
+              <span class="status-true">✓</span>
+              {% else %}
+              <span class="status-false">✗</span>
+              {% endif %}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
     </div>
   </div>
-  <div class="journey-checkpoints">
-    <h2>Journey Checkpoints</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>Location</th>
-          <th>Checkpoint Status</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for checkpoint in checkpoints %}
-        <tr>
-          <td>{{ checkpoint.checkpoint.location }}</td>
-          <td>
-            {% if checkpoint.checkpoint_reached %}
-            <span class="status-true">✓</span>
-            {% else %}
-            <span class="status-false">✗</span>
-            {% endif %}
-          </td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
+  <div class="map-container">
+    <div id="map">
+    </div>
   </div>
 </div>
 
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css">
-<style>
-  .map {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    width: 100%;
-    margin-left: 250px;
-    margin-top: 100px;
-    margin-bottom: 20px;
-    height: 400px;
-  }
-</style>
-
-<div class="map-container">
-    <div id="map" style="height: 600px; width: 100%; "></div>
-  </div>
-
 <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 <script>
-  var map = L.map('map').setView([0, 0], 13);
+  var map = L.map("map").setView([0, 0], 13);
 
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    attribution:
+      '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
   }).addTo(map);
 
   var marker = L.marker([0, 0]).addTo(map);
@@ -86,16 +77,20 @@
     console.warn(`ERROR(${err.code}): ${err.message}`);
   }
 
-  if ('geolocation' in navigator) {
-    navigator.geolocation.watchPosition(updateLocation, locationError, { enableHighAccuracy: true });
+  if ("geolocation" in navigator) {
+    navigator.geolocation.watchPosition(updateLocation, locationError, {
+      enableHighAccuracy: true,
+    });
   } else {
-    console.log('Geolocation is not available in this browser.');
+    console.log("Geolocation is not available in this browser.");
   }
 
   // Update location every 5 seconds
   setInterval(function () {
-    if ('geolocation' in navigator) {
-      navigator.geolocation.getCurrentPosition(updateLocation, locationError, { enableHighAccuracy: true });
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(updateLocation, locationError, {
+        enableHighAccuracy: true,
+      });
     }
   }, 5000);
 </script>

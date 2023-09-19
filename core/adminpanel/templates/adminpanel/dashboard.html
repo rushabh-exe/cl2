@@ -5,28 +5,31 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>CL2-Dashboard</title>
-    <link rel="stylesheet" href="{% static 'dashboard.css' %}">
+    <link rel="stylesheet" href="{% static 'dashboard.css' %}" />
   </head>
   <body>
-    <div class="navbar">
-      <a href="/tracker">Home</a>
-      <a href="/tracker/trucks">Trucks</a>
-      <a href="/tracker/trains">Trains</a>
-      <a href="/tracker/ships">Ships</a>
-      <a href="/rakes">Rakes</a>
-    </div>
+    <div class="static-dash">
+      <div class="navbar">
+        <a href="/tracker">Home</a>
+        <a href="/tracker/trucks">Trucks</a>
+        <a href="/tracker/trains">Trains</a>
+        <a href="/tracker/ships">Ships</a>
+        <a href="/rakes">Rakes</a>
+      </div>
 
-    <div class="sidebar">
-      <h2 class="h2">Dashboard</h2>
-      <ul>
-        <li><a href="/admin/adminpanel">Create</a></li>
-        <li><a href="/tracker/drivers">Drivers</a></li>
-        <li><a href="/admin">Admin</a></li>
-        <li><a href="/report/seereport">Reports</a></li>
-      </ul>
+      <div class="sidebar">
+        <h2 class="h2">Dashboard</h2>
+        <ul>
+          <li><a href="/admin/adminpanel">Create</a></li>
+          <li><a href="/tracker/drivers">Drivers</a></li>
+          <li><a href="/admin">Admin</a></li>
+          <li><a href="/report/seereport">Reports</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="the-seperator">
+      <div></div>
+      <div class="column-div">{% block content %} {% endblock %}</div>
     </div>
   </body>
 </html>
-
-{% block content %}
-{% endblock %}

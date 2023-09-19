@@ -2,71 +2,64 @@
 {% block content %}
 {% load static %}
 <link rel="stylesheet" href="{% static 'inditruck.css' %}">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css">
+
 
 <div class="container-indi">
-    <div class="indi-first">
-      <div>
-        <h2>Driver : {{ truck.driver.name }}</h2>
-        <h2>Buyer : {{ truck.buyer.name }}</h2>
-        <h2>Coal Type: {{ truck.coal_type }}</h2>
-        <h2>Capacity: {{ truck.capacity }} MT</h2>
-        <h2>Start Date: {{ truck.start_date }}</h2>
-        {% if truck.complete %}
-        <h2>Truck Status: Completed</h2>
-        {% else %}
-        <h2>Truck Status: Not Completed</h2>
-        {% endif %}
+    <div class="info-table">
+      <div class="indi-first">
+        <div>
+          <h2>Driver : {{ truck.driver.name }}</h2>
+          <h2>Buyer : {{ truck.buyer.name }}</h2>
+          <h2>Coal Type: {{ truck.coal_type }}</h2>
+          <h2>Capacity: {{ truck.capacity }} MT</h2>
+          <h2>Start Date: {{ truck.start_date }}</h2>
+          {% if truck.complete %}
+          <h2>Truck Status: Completed</h2>
+          {% else %}
+          <h2>Truck Status: Not Completed</h2>
+          {% endif %}
+        </div>
+      </div>
+      <div class="journey-checkpoints">
+          <h2>Journey Checkpoints</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Location</th>
+                <th>Checkpoint Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for checkpoint in checkpoints %}
+              <tr>
+                <td>{{ checkpoint.checkpoint.location }}</td>
+                <td>
+                  {% if checkpoint.checkpoint_reached %}
+                    <span class="status-true">✓</span> 
+                  {% else %}
+                    <span class="status-false">✗</span>
+                  {% endif %}
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+          <br>
+          <h5><div id="distance">Distance: ~ Calculating...</div></h5>
+          <h5><div id="time">Time: Calculating...</div></h5>
+          <h5><div id="fuelPrice">Fuel Price: ~ Calculating...</div></h5>
+        </div>
       </div>
     </div>
-    <div class="journey-checkpoints">
-        <h2>Journey Checkpoints</h2>
-        <table>
-          <thead>
-            <tr>
-              <th>Location</th>
-              <th>Checkpoint Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for checkpoint in checkpoints %}
-            <tr>
-              <td>{{ checkpoint.checkpoint.location }}</td>
-              <td>
-                {% if checkpoint.checkpoint_reached %}
-                  <span class="status-true">✓</span> 
-                {% else %}
-                  <span class="status-false">✗</span>
-                {% endif %}
-              </td>
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-        <br>
-        <h5><div id="distance">Distance: ~ Calculating...</div></h5>
-        <h5><div id="time">Time: Calculating...</div></h5>
-        <h5><div id="fuelPrice">Fuel Price: ~ Calculating...</div></h5>
-      </div>
+    <div class="map-container">
+      <div id="map"></div>
     </div>
-  </div>
+</div>
 
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css">
+
 <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
-    <style>
-        #map {
-            height: 400px;
-        }
-    </style>
-</head>
-<body>
-
-
-<div class="map-container">
-    <div id="map" style="height: 600px; width: 100%; "></div>
-  </div>
-
 <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script> 
 
@@ -132,20 +125,4 @@
             console.error('Error:', error);
         });
 </script>
-
-
-<style>
-    .start-icon {
-        color: green;
-        text-align: center;
-        font-size: 20px;
-    }
-
-    .end-icon {
-        color: red;
-        text-align: center;
-        font-size: 20px;
-    }
-</style>
-
 {% endblock %}
